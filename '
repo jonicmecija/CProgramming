@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct node{
+	int data;
+	struct node* next;
+};
+
+void printList(struct node* head){
+	while(head){
+	printf("%d ", head->data);
+	head = head->next;
+	}
+	printf("\n");
+}
+
+struct node* addNode(struct node* head, int data, int index){
+	int count = 0;
+	
+	if(index == 0){
+	struct node * nodeToAdd = NULL;
+	nodeToAdd = malloc(sizeof(struct node));
+	nodeToAdd->data = data;
+	nodeToAdd->next = head;
+	return nodeToAdd;
+	}
+	index--;
+	
+	
+	// iterate until you reach node before index
+	while(count < index){
+	head = head->next;
+	count = count + 1;
+	}
+	printf("this is count: %d\n", count);
+	struct node* tempHead = head;
+	struct node* temp = NULL;
+	temp = malloc(sizeof(struct node));
+	
+	struct node* nodeToAdd = NULL;
+	nodeToAdd = malloc(sizeof(struct node));
+	nodeToAdd->data = data;
+	
+	temp = head->next;
+	head->next = nodeToAdd;
+	nodeToAdd->next = temp;
+
+	return tempHead;
+}
+int main(){
+
+	struct node* head;
+	struct node* one = NULL;
+	struct node* two = NULL;
+	struct node* three = NULL;
+
+	// allocate memory
+	one = malloc(sizeof(struct node));
+	two = malloc(sizeof(struct node));
+	three = malloc(sizeof(struct node));
+
+	one->data = 1;
+	two->data = 2;
+	three->data = 3;
+
+	one->next = two;
+	two->next = three;
+	three->next = NULL;
+
+	head = one;
+	printList(one);
+	addNode(one, 34, 1);
+	printList(one);
+	return 0;
+}
+
